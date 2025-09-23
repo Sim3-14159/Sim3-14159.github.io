@@ -3,24 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <title>Sim3-14159's Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Hi, I'm Sim3-14159!</h1>
-    <p>Welcome to my personal website.</p>
-  </header>
-  <section>
-    <h2>About Me</h2>
-    <p>I love coding, cats, and solving cubes!</p>
-  </section>
-  <section>
-    <h2>My Projects</h2>
-    <ul>
-      <li><a href="https://github.com/Sim3-14159/Testing">Testing</a></li>
-      <li><a href="https://github.com/Sim3-14159/Snake_Game">Snake Game</a></li>
-      <li><a href="https://github.com/Sim3-14159/cube-solving-app">Cube Solving App</a></li>
-    </ul>
-  </section>
+  <div class="background"></div>
+  <div class="container">
+    <header>
+      <h1>Sim3-14159</h1>
+      <button id="github-btn" onclick="window.open('https://github.com/Sim3-14159', '_blank')">My GitHub Profile</button>
+      <p>Welcome to my profile website! Here are my repositories:</p>
+    </header>
+    <section>
+      <ul id="repo-list">
+        <li>Loading repositories...</li>
+      </ul>
+    </section>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
