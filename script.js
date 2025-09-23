@@ -4,7 +4,7 @@ const repoList = document.getElementById("repo-list");
 async function loadRepos() {
   repoList.innerHTML = "<li>Loading repositories...</li>";
   try {
-    const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated`);
+    const response = await fetch(`https://api.github.com/users/${username}/repos?sort=pushed`);
     const repos = await response.json();
     if (!Array.isArray(repos)) {
       repoList.innerHTML = "<li>Could not load repositories.</li>";
@@ -17,8 +17,14 @@ async function loadRepos() {
     repoList.innerHTML = "";
     repos.forEach(repo => {
       const li = document.createElement("li");
-      li.innerHTML = `<a href="${repo.html_url}" target="_blank">${repo.name}</a>
-        <span style="color: #555; font-size: 0.95em;">${repo.description ? " – " + repo.description : ""}</span>`;
+      li.innerHTML = `
+        <a href="${repo.html_url}" target="_blank">${repo.name}</a>
+        <span style="color: #555; font-size: 0.95em;">
+          ${repo.description ? " – " + repo.description : ""}
+          ${repo.language ? " | " + repo.language : ""}
+          ⭐${repo.stargazers_count}
+        </span>
+      `;
       repoList.appendChild(li);
     });
   } catch (err) {
