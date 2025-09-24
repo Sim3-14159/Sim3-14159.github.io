@@ -5,20 +5,21 @@
   <title>Error #404</title>
   <style>
     body {
-      animation: throb 1.4s infinite alternate;
+      animation: throb 2.5s infinite alternate;
       background: #121212;
       color: #f2f2f2;
       font-family: 'Segoe UI', Arial, sans-serif;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      overflow-x: hidden;
     }
     @keyframes throb {
       0% { transform: scale(1); }
-      100% { transform: scale(1.04); }
+      100% { transform: scale(1.012); }
     }
 
     .glitch {
@@ -31,6 +32,7 @@
       text-align: center;
       animation: glitch-skew 1s infinite linear alternate-reverse;
       overflow: visible;
+      user-select: none;
     }
     .glitch .glitch-layer {
       position: absolute;
@@ -91,6 +93,7 @@
       text-shadow: 0 0 6px #ff2222;
       z-index: 3;
       position: relative;
+      user-select: none;
     }
 
     .terminal {
@@ -98,18 +101,72 @@
       border-radius: 6px;
       box-shadow: 0 2px 16px #000a;
       margin-top: 2em;
-      padding: 1em 1.6em;
+      padding: 1.4em 2.2em;
       font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Monaco', monospace;
       color: #a5ff90;
-      font-size: 1.15em;
-      width: 90vw;
-      max-width: 540px;
+      font-size: 1.18em;
+      width: 95vw;
+      max-width: 800px;
       white-space: pre-wrap;
       border: 2px solid #262c34;
       z-index: 2;
+      position: relative;
+      overflow-x: auto;
+      user-select: text;
     }
     .terminal .prompt {
       color: #ff2222;
+      font-weight: bold;
+      user-select: none;
+    }
+
+    /* Glitch effect for the terminal text */
+    .glitch-term {
+      position: relative;
+      display: inline-block;
+      animation: term-glitch 1.2s infinite linear alternate-reverse;
+    }
+    .glitch-term:before, .glitch-term:after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0; top: 0;
+      width: 100%;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .glitch-term:before {
+      color: #ff2222;
+      left: 1px;
+      text-shadow: 2px 0 #00fff9;
+      animation: term-glitch-anim1 1.3s infinite linear alternate-reverse;
+    }
+    .glitch-term:after {
+      color: #00fff9;
+      left: -1px;
+      text-shadow: -2px 0 #ff2222;
+      animation: term-glitch-anim2 1s infinite linear alternate-reverse;
+    }
+    @keyframes term-glitch {
+      0% { }
+      20% { transform: translateX(1px); }
+      40% { transform: translateX(-1px); }
+      60% { transform: translateY(1px); }
+      80% { transform: translateY(-1px); }
+      100% { }
+    }
+    @keyframes term-glitch-anim1 {
+      0% { opacity: 0.5; }
+      10% { opacity: 0.9; left:2px;}
+      25% { opacity: 0.1; left:-2px;}
+      50% { opacity: 0.6; left:1px;}
+      100% { opacity: 0.5; left:1px;}
+    }
+    @keyframes term-glitch-anim2 {
+      0% { opacity: 0.6; }
+      20% { opacity: 0.3; left:2px;}
+      40% { opacity: 0.8; left:-3px;}
+      60% { opacity: 0.2; left:1px;}
+      100% { opacity: 0.6; left:-1px;}
     }
   </style>
 </head>
@@ -121,11 +178,16 @@
   </div>
   <div class="notfound">Page not found</div>
   <div class="terminal">
-    <span class="prompt">&gt; </span>Could not find the page <span id="url"></span>.
+    <span class="prompt">&gt; </span>
+    <span class="glitch-term" id="term-msg" data-text=""></span>
   </div>
   <script>
-    // Insert current page URL into terminal
-    document.getElementById('url').textContent = window.location.href;
+    // Insert current page URL into terminal with glitch effect
+    const url = window.location.href;
+    const txt = `Could not find the page ${url}.`;
+    const termMsg = document.getElementById('term-msg');
+    termMsg.textContent = txt;
+    termMsg.setAttribute('data-text', txt);
   </script>
 </body>
 </html>
