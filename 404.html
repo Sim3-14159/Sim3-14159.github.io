@@ -6,7 +6,11 @@
   <style>
     body {
       animation: throb 2.5s infinite alternate;
-      background: #121212;
+      background-color: #0d1117;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(to right, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 100% 20px, 40px 100%;
       color: #f2f2f2;
       font-family: 'Segoe UI', Arial, sans-serif;
       min-height: 100vh;
@@ -17,6 +21,18 @@
       justify-content: center;
       overflow-x: hidden;
     }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('data:image/svg+xml;utf8,<svg width="4" height="4" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" fill="white" fill-opacity="0.03"/></svg>');
+      z-index: 0;
+      pointer-events: none;
+    }
+
     @keyframes throb {
       0% { transform: scale(1); }
       100% { transform: scale(1.012); }
@@ -33,7 +49,9 @@
       animation: glitch-skew 1s infinite linear alternate-reverse;
       overflow: visible;
       user-select: none;
+      z-index: 3;
     }
+
     .glitch .glitch-layer {
       position: absolute;
       left: 0; top: 0;
@@ -42,16 +60,19 @@
       user-select: none;
       opacity: 0.6;
     }
+
     .glitch .glitch-layer.red {
       color: #ff2222;
       text-shadow: -2px 0 #fff, 2px 2px #00fff9;
       animation: glitch-anim 1.7s infinite linear alternate-reverse;
     }
+
     .glitch .glitch-layer.blue {
       color: #00fff9;
       text-shadow: 2px 0 #fff, -2px -2px #ff2222;
       animation: glitch-anim2 1.3s infinite linear alternate-reverse;
     }
+
     @keyframes glitch-anim {
       0% { clip-path: inset(0 0 0 0); left: 2px; }
       20% { clip-path: inset(5% 0 60% 0); left: 4px;}
@@ -60,6 +81,7 @@
       80% { clip-path: inset(10% 0 50% 0); left: -1px;}
       100% { clip-path: inset(20% 0 0 0); left: 3px;}
     }
+
     @keyframes glitch-anim2 {
       0% { clip-path: inset(0 0 0 0); left: -2px;}
       15% { clip-path: inset(60% 0 5% 0); left: -4px;}
@@ -68,6 +90,7 @@
       60% { clip-path: inset(50% 0 10% 0); left: 1px;}
       100% { clip-path: inset(0 0 20% 0); left: -3px;}
     }
+
     @keyframes glitch-skew {
       0% { transform: skew(0deg); }
       10% { transform: skew(-2deg); }
@@ -77,6 +100,7 @@
       50% { transform: skew(0deg); }
       100% { transform: skew(0deg); }
     }
+
     .glitch .main {
       position: relative;
       z-index: 2;
@@ -117,12 +141,12 @@
       align-items: center;
     }
 
-    /* Glitch effect for the terminal text */
     .glitch-term {
       position: relative;
       display: inline-block;
       animation: term-glitch 1.2s infinite linear alternate-reverse;
     }
+
     .glitch-term:before, .glitch-term:after {
       content: attr(data-text);
       position: absolute;
@@ -131,18 +155,21 @@
       opacity: 0.5;
       pointer-events: none;
     }
+
     .glitch-term:before {
       color: #ff2222;
       left: 1px;
       text-shadow: 2px 0 #00fff9;
       animation: term-glitch-anim1 1.3s infinite linear alternate-reverse;
     }
+
     .glitch-term:after {
       color: #00fff9;
       left: -1px;
       text-shadow: -2px 0 #ff2222;
       animation: term-glitch-anim2 1s infinite linear alternate-reverse;
     }
+
     @keyframes term-glitch {
       0% { }
       20% { transform: translateX(1px); }
@@ -151,6 +178,7 @@
       80% { transform: translateY(-1px); }
       100% { }
     }
+
     @keyframes term-glitch-anim1 {
       0% { opacity: 0.5; }
       10% { opacity: 0.9; left:2px;}
@@ -158,6 +186,7 @@
       50% { opacity: 0.6; left:1px;}
       100% { opacity: 0.5; left:1px;}
     }
+
     @keyframes term-glitch-anim2 {
       0% { opacity: 0.6; }
       20% { opacity: 0.3; left:2px;}
@@ -173,9 +202,21 @@
       margin-right: 0.7em;
       display: inline-block;
       font-size: 1.18em;
-      /* Prevent line break after prompt */
       vertical-align: middle;
       animation: term-glitch 1.2s infinite linear alternate-reverse;
+    }
+
+    /* Blinking cursor */
+    .glitch-term::after {
+      content: '|';
+      color: #a5ff90;
+      animation: blink 1s infinite;
+      margin-left: 2px;
+    }
+
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
     }
   </style>
 </head>
@@ -185,20 +226,31 @@
     <span class="glitch-layer blue">Error #404</span>
     <span class="main">Error #404</span>
   </div>
-  <div class="glitch">
-    <div class="notfound">Page not found</div>
-  </div>
+  <div class="notfound">Page not found</div>
   <div class="terminal">
     <span class="prompt">&gt;</span>
     <span class="glitch-term" id="term-msg" data-text=""></span>
   </div>
+
   <script>
-    // Insert current page URL into terminal with glitch effect
     const url = window.location.href;
     const txt = `Could not find the page ${url}.`;
     const termMsg = document.getElementById('term-msg');
-    termMsg.textContent = txt;
-    termMsg.setAttribute('data-text', txt);
+
+    let index = 0;
+    const typingSpeed = 40; // milliseconds per character
+
+    function typeText() {
+      if (index <= txt.length) {
+        const current = txt.substring(0, index);
+        termMsg.textContent = current;
+        termMsg.setAttribute('data-text', current);
+        index++;
+        setTimeout(typeText, typingSpeed);
+      }
+    }
+
+    typeText();
   </script>
 </body>
 </html>
