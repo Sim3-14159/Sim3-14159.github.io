@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Error #404</title>
   <style>
-    /* Throbbing animation for the whole page */
     body {
       animation: throb 1.4s infinite alternate;
       background: #121212;
@@ -22,7 +21,6 @@
       100% { transform: scale(1.04); }
     }
 
-    /* Glitch effect for the title */
     .glitch {
       position: relative;
       color: #ff2222;
@@ -32,42 +30,41 @@
       margin-bottom: 0.5em;
       text-align: center;
       animation: glitch-skew 1s infinite linear alternate-reverse;
+      overflow: visible;
     }
-    .glitch:before,
-    .glitch:after {
-      content: "Error #404";
+    .glitch .glitch-layer {
       position: absolute;
-      left: 0; right: 0; top: 0; bottom: 0;
-      opacity: 0.7;
-      z-index: -1;
+      left: 0; top: 0;
+      width: 100%;
+      pointer-events: none;
+      user-select: none;
+      opacity: 0.6;
     }
-    .glitch:before {
-      color: #ff0000;
-      left: 2px;
+    .glitch .glitch-layer.red {
+      color: #ff2222;
       text-shadow: -2px 0 #fff, 2px 2px #00fff9;
       animation: glitch-anim 1.7s infinite linear alternate-reverse;
     }
-    .glitch:after {
-      color: #ff6666;
-      left: -2px;
-      text-shadow: 2px 0 #fff, -2px -2px #00fff9;
+    .glitch .glitch-layer.blue {
+      color: #00fff9;
+      text-shadow: 2px 0 #fff, -2px -2px #ff2222;
       animation: glitch-anim2 1.3s infinite linear alternate-reverse;
     }
     @keyframes glitch-anim {
-      0% { clip-path: inset(0 0 0 0); }
-      20% { clip-path: inset(5% 0 60% 0); }
-      40% { clip-path: inset(10% 0 45% 0); }
-      60% { clip-path: inset(15% 0 25% 0); }
-      80% { clip-path: inset(10% 0 50% 0); }
-      100% { clip-path: inset(20% 0 0 0); }
+      0% { clip-path: inset(0 0 0 0); left: 2px; }
+      20% { clip-path: inset(5% 0 60% 0); left: 4px;}
+      40% { clip-path: inset(10% 0 45% 0); left: -2px;}
+      60% { clip-path: inset(15% 0 25% 0); left: 2px;}
+      80% { clip-path: inset(10% 0 50% 0); left: -1px;}
+      100% { clip-path: inset(20% 0 0 0); left: 3px;}
     }
     @keyframes glitch-anim2 {
-      0% { clip-path: inset(0 0 0 0); }
-      15% { clip-path: inset(60% 0 5% 0); }
-      30% { clip-path: inset(45% 0 10% 0); }
-      45% { clip-path: inset(25% 0 15% 0); }
-      60% { clip-path: inset(50% 0 10% 0); }
-      100% { clip-path: inset(0 0 20% 0); }
+      0% { clip-path: inset(0 0 0 0); left: -2px;}
+      15% { clip-path: inset(60% 0 5% 0); left: -4px;}
+      30% { clip-path: inset(45% 0 10% 0); left: 2px;}
+      45% { clip-path: inset(25% 0 15% 0); left: -2px;}
+      60% { clip-path: inset(50% 0 10% 0); left: 1px;}
+      100% { clip-path: inset(0 0 20% 0); left: -3px;}
     }
     @keyframes glitch-skew {
       0% { transform: skew(0deg); }
@@ -78,20 +75,57 @@
       50% { transform: skew(0deg); }
       100% { transform: skew(0deg); }
     }
+    .glitch .main {
+      position: relative;
+      z-index: 2;
+      color: #ff2222;
+    }
 
     .notfound {
       font-size: 2em;
       color: #fff;
       margin-top: 0.4em;
       text-align: center;
-      opacity: 0.9;
+      opacity: 0.93;
       letter-spacing: 1px;
       text-shadow: 0 0 6px #ff2222;
+      z-index: 3;
+      position: relative;
+    }
+
+    .terminal {
+      background: #161b22;
+      border-radius: 6px;
+      box-shadow: 0 2px 16px #000a;
+      margin-top: 2em;
+      padding: 1em 1.6em;
+      font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Monaco', monospace;
+      color: #a5ff90;
+      font-size: 1.15em;
+      width: 90vw;
+      max-width: 540px;
+      white-space: pre-wrap;
+      border: 2px solid #262c34;
+      z-index: 2;
+    }
+    .terminal .prompt {
+      color: #ff2222;
     }
   </style>
 </head>
 <body>
-  <div class="glitch">Error #404</div>
+  <div class="glitch">
+    <span class="glitch-layer red">Error #404</span>
+    <span class="glitch-layer blue">Error #404</span>
+    <span class="main">Error #404</span>
+  </div>
   <div class="notfound">Page not found</div>
+  <div class="terminal">
+    <span class="prompt">&gt; </span>Could not find the page <span id="url"></span>.
+  </div>
+  <script>
+    // Insert current page URL into terminal
+    document.getElementById('url').textContent = window.location.href;
+  </script>
 </body>
 </html>
