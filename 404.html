@@ -206,14 +206,12 @@
       animation: term-glitch 1.2s infinite linear alternate-reverse;
     }
 
-    /* Blinking cursor */
-    .glitch-term::after {
-      content: '|';
+    .cursor {
       color: #a5ff90;
       animation: blink 1s infinite;
-      margin-left: 2px;
+      font-weight: normal;
     }
-
+    
     @keyframes blink {
       0%, 49% { opacity: 1; }
       50%, 100% { opacity: 0; }
@@ -229,7 +227,7 @@
   <div class="notfound">Page not found</div>
   <div class="terminal">
     <span class="prompt">&gt;</span>
-    <span class="glitch-term" id="term-msg" data-text=""></span>
+    <span class="glitch-term" id="term-msg" data-text=""></span><span class="cursor" id="cursor">|</span>
   </div>
 
   <script>
