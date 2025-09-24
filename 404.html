@@ -235,7 +235,7 @@
       z-index: 0;
       overflow: hidden;
       background: none;
-      opacity: 0.25;
+      opacity: 0.4;
     }
     
     .code-background .keyword {
@@ -255,11 +255,23 @@
 </head>
 <body>
   <pre class="code-background">
-    <span class="comment">// Error Handler</span>
-    <span class="keyword">function</span> <span class="function">handle404</span>() {
-      <span class="keyword">const</span> url = <span class="string">window.location.href</span>;
-      <span class="keyword">return</span> <span class="string">`404: Page not found → ${url}`</span>;
-    }
+    <span class="tag">&lt;html&gt;</span>
+      <span class="tag">&lt;head&gt;</span>
+        <span class="tag">&lt;title&gt;</span><span class="string">Page Not Found</span><span class="tag">&lt;/title&gt;</span>
+        <span class="tag">&lt;script&gt;</span>
+          <span class="keyword">function</span> <span class="function">init</span>() {
+            <span class="keyword">const</span> url = <span class="string">window.location.href</span>;
+            <span class="keyword">document</span>.body.innerHTML += 
+              <span class="string">`&lt;p&gt;404: Could not load ${url}&lt;/p&gt;`</span>;
+          }
+          <span class="function">init</span>();
+        <span class="tag">&lt;/script&gt;</span>
+      <span class="tag">&lt;/head&gt;</span>
+      <span class="tag">&lt;body&gt;</span>
+        <span class="tag">&lt;h1&gt;</span><span class="string">Error 404</span><span class="tag">&lt;/h1&gt;</span>
+        <span class="tag">&lt;p&gt;</span><span class="string">The requested page was not found on this server.</span><span class="tag">&lt;/p&gt;</span>
+      <span class="tag">&lt;/body&gt;</span>
+    <span class="tag">&lt;/html&gt;</span>
   </pre>
   <div class="glitch">
     <span class="glitch-layer red">Error #404</span>
