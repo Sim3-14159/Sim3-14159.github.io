@@ -113,11 +113,8 @@
       position: relative;
       overflow-x: auto;
       user-select: text;
-    }
-    .terminal .prompt {
-      color: #ff2222;
-      font-weight: bold;
-      user-select: none;
+      display: flex;
+      align-items: center;
     }
 
     /* Glitch effect for the terminal text */
@@ -168,6 +165,18 @@
       60% { opacity: 0.2; left:1px;}
       100% { opacity: 0.6; left:-1px;}
     }
+
+    .terminal .prompt {
+      color: #ff2222;
+      font-weight: bold;
+      user-select: none;
+      margin-right: 0.7em;
+      display: inline-block;
+      font-size: 1.18em;
+      /* Prevent line break after prompt */
+      vertical-align: middle;
+      animation: term-glitch 1.2s infinite linear alternate-reverse;
+    }
   </style>
 </head>
 <body>
@@ -178,7 +187,7 @@
   </div>
   <div class="notfound">Page not found</div>
   <div class="terminal">
-    <span class="prompt">&gt; </span>
+    <span class="prompt">&gt;</span>
     <span class="glitch-term" id="term-msg" data-text=""></span>
   </div>
   <script>
