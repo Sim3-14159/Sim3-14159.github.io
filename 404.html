@@ -131,14 +131,13 @@
       font-size: 1.18em;
       width: 95vw;
       max-width: 1100px;
-      white-space: pre-wrap;
+      white-space: pre-wrap; /* wraps long lines! */
       border: 2px solid #262c34;
       z-index: 2;
       position: relative;
       overflow-x: auto;
       user-select: text;
-      display: flex;
-      align-items: center;
+      display: block; /* or just remove, block is default */
     }
 
     .glitch-term {
@@ -279,9 +278,9 @@
     <span class="main">Error #404</span>
   </div>
   <div class="notfound">Page not found</div>
+
   <div class="terminal">
-    <span class="prompt">&gt;</span>
-    <span class="glitch-term" id="term-msg" data-text=""></span><span class="cursor" id="cursor">|</span>
+    <span class="prompt">&gt;</span><span class="glitch-term" id="term-msg" data-text=""></span><span class="cursor" id="cursor">|</span>
   </div>
 
   <script>
