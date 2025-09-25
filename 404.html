@@ -154,30 +154,37 @@
     }
 
     .glitch-term {
-      display: inline;
-      animation: term-glitch 1.2s infinite linear alternate-reverse;
+      position: relative;
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #a5ff90; /* Primary text color */
+      z-index: 1;
     }
-
-    .glitch-term:before,
-    .glitch-term:after {
+    
+    /* Glitch pseudo-elements */
+    .glitch-term::before,
+    .glitch-term::after {
       content: attr(data-text);
       position: absolute;
-      left: 0;
       top: 0;
-      opacity: 0.5;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
       pointer-events: none;
+      opacity: 0.5;
+      z-index: -1; /* Send behind the main text */
     }
-
-    .glitch-term:before {
+    
+    .glitch-term::before {
       color: #ff2222;
-      left: 1px;
       text-shadow: 2px 0 #00fff9;
       animation: term-glitch-anim1 1.3s infinite linear alternate-reverse;
     }
-
-    .glitch-term:after {
+    
+    .glitch-term::after {
       color: #00fff9;
-      left: -1px;
       text-shadow: -2px 0 #ff2222;
       animation: term-glitch-anim2 1s infinite linear alternate-reverse;
     }
