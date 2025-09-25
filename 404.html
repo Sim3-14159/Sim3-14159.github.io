@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Error #404</title>
   <style>
     body {
@@ -19,7 +19,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      overflow-x: hidden;
+      overflow-y: auto;
+      position: relative; /* stacking context for z-index */
     }
 
     body::before {
@@ -49,7 +50,7 @@
       animation: glitch-skew 1s infinite linear alternate-reverse;
       overflow: visible;
       user-select: none;
-      z-index: 3;
+      z-index: 1;
     }
 
     .glitch .glitch-layer {
@@ -115,7 +116,7 @@
       opacity: 0.93;
       letter-spacing: 1px;
       text-shadow: 0 0 6px #ff2222;
-      z-index: 3;
+      z-index: 1;
       position: relative;
       user-select: none;
     }
@@ -124,20 +125,21 @@
       background: #161b22;
       border-radius: 6px;
       box-shadow: 0 2px 16px #000a;
-      margin-top: 2em;
+      margin: 2em auto;
       padding: 1.4em 2.2em;
       font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Monaco', monospace;
       color: #a5ff90;
       font-size: 1.18em;
       width: 95vw;
       max-width: 1100px;
-      white-space: pre-wrap; /* wraps long lines! */
+      white-space: pre-wrap;
       border: 2px solid #262c34;
-      z-index: 2;
+      z-index: 1;
       position: relative;
       overflow-x: auto;
       user-select: text;
-      display: block; /* or just remove, block is default */
+      display: flex;
+      align-items: center;
     }
 
     .glitch-term {
@@ -210,7 +212,7 @@
       animation: blink 1s infinite;
       font-weight: normal;
     }
-    
+
     @keyframes blink {
       0%, 49% { opacity: 1; }
       50%, 100% { opacity: 0; }
@@ -236,7 +238,7 @@
       background: none;
       opacity: 0.45;
     }
-    
+
     .code-background .keyword {
       color: rgba(255, 99, 71, 0.2);
     }
@@ -272,15 +274,16 @@
       <span class="tag">&lt;/body&gt;</span>
     <span class="tag">&lt;/html&gt;</span>
   </pre>
+
   <div class="glitch">
     <span class="glitch-layer red">Error #404</span>
     <span class="glitch-layer blue">Error #404</span>
     <span class="main">Error #404</span>
   </div>
   <div class="notfound">Page not found</div>
-
   <div class="terminal">
-    <span class="prompt">&gt;</span><span class="glitch-term" id="term-msg" data-text=""></span><span class="cursor" id="cursor">|</span>
+    <span class="prompt">&gt;</span>
+    <span class="glitch-term" id="term-msg" data-text=""></span><span class="cursor" id="cursor">|</span>
   </div>
 
   <script>
