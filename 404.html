@@ -130,15 +130,16 @@
       font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Monaco', monospace;
       color: #a5ff90;
       font-size: 1.18em;
-      
-      /* Width & height 2px less than viewport */
-      width: calc(100vw - 2px);
+    
+      /* Width and height relative to viewport */
+      width: calc(100vw - 2em); /* small margin for padding */
       max-width: 1100px;
-      max-height: calc(100vh - 2px);
-      
-      overflow-y: auto;  /* scroll if content is taller */
+    
+      max-height: calc(100vh - 7em); /* Adjust based on header + margin + padding */
+    
+      overflow-y: auto;  /* internal scroll */
       border: 2px solid #262c34;
-      box-sizing: border-box; /* include padding and border in width/height */
+      box-sizing: border-box;
       position: relative;
       z-index: 1;
     }
