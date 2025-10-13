@@ -23,8 +23,8 @@ async function loadRepos() {
         <a href="${repo.html_url}" target="_blank" rel="noopener">${repo.name}</a>
         <div class="repo-meta">
           ${repo.description ? `<span>${repo.description}</span>` : ""}
-          ${repo.language ? `<span>📝 ${repo.language}</span>` : ""}
-          <span>⭐ ${repo.stargazers_count}</span>
+          ${repo.language ? `<span>📝 ${repo.language}</span>` : ""}<br>
+          <span>⭐ ${repo.stargazers_count}</span><br>
           <span>🔄 Updated: ${new Date(repo.pushed_at).toLocaleDateString()}</span>
         </div>
       `;
